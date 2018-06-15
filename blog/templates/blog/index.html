@@ -1,0 +1,46 @@
+{% extends 'blog/base.html' %}
+{% block body %}
+ <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <form method="POST" action="insert" class="form-inline">
+          {% csrf_token %}
+                <input type="hidden" name="id" value="1"/>
+                <span >Name </span>
+                <input type="text" class="form-control" name="name" required="required" padding-left='10px'/>
+                <span style="margin-bottom: 20pxcm;"></span>
+                <textarea style="width:100%; height:80px; resize:none;" class="form-control" name="content" required="required"></textarea>
+                <br/><br/>
+                <span style="margin-bottom: 3cm;"></span>
+                <button class="btn btn-sm btn-primary pull-right">Comment</button>
+        </form>
+    </div>
+    <div style="clear:both;"></div>
+    <hr style="border-top:1px dotted #ccc;"/>
+    {% for key, value in context.items %}
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{key}}</h5>
+            <p class="card-text" style="padding-left:50px;margin:10px;">{{ value.0 }}</p>
+          </div>
+            <div id="parent_{{ key }}">
+            <a href="#" class="button" style="padding-left:55px" id="btnClick">Reply</a>
+            </div>
+            <p style="margin: 10px;">
+                {% for name,comment in value.1.items %}
+                <div style="clear:both;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">{{name}}</h5>
+                      <p class="card-text" style="padding-left:50px;margin:10px;">{{ comment }}</p>
+                    </div>
+                      <div id="parent_{{ key }}">
+                      <a href="#" class="button" style="padding-left:55px" id="btnClick">Reply</a>
+                      </div>
+
+                {% endfor %}
+            </p>
+        </div>
+
+        <br style="clear:both;"/><br />
+    {% endfor %}
+
+{% endblock %}
